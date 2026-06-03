@@ -3,7 +3,7 @@
   <div class="todo-container">
     <div class="todo-wrap">
       <HeaderVue :recieve="recieve"/>
-      <List :todos="todos" />
+      <List :todos="todos" :checkTodo="checkTodo"/>
       <Footer />
     </div>
   </div>
@@ -35,7 +35,17 @@ export default {
   methods: {
      recieve(data){
         this.todos.unshift(data);
+     },
+     //取消勾选或勾选todo
+     checkTodo(id){
+       this.todos.forEach(
+        (todo) =>{
+           if(todo.id === id){
+              todo.done = !todo.done
+           }
+        })
      }
+
   }
 }
 </script>
