@@ -3,7 +3,9 @@
   <div class="todo-container">
     <div class="todo-wrap">
       <HeaderVue :recieve="recieve"/>
-      <List :todos="todos" />
+      <List :todos="todos"
+       :handleDelete="handelDelete"
+       />
       <Footer />
     </div>
   </div>
@@ -35,6 +37,9 @@ export default {
   methods: {
      recieve(data){
         this.todos.unshift(data);
+     },
+     handelDelete(id){
+       this.todos = this.todos.filter(item => item.id !== id);
      }
   }
 }

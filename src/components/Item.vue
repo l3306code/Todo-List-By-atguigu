@@ -5,7 +5,7 @@
       <input type="checkbox" v-model="todoObj.done" />
       <span>{{ todoObj.title }}</span>
     </label>
-    <button class="btn btn-danger" style="display:none">删除</button>
+    <button class="btn btn-danger" @click="deleteTodo(todoObj.id)">删除</button>
   </li>
 </template>
 
@@ -16,7 +16,7 @@ export default {
 
   },
   //父传子核心操作
-  props: ['todoObj'],
+  props: ['todoObj', 'handleDelete'],
   data() {
     return {
     };
@@ -28,7 +28,11 @@ export default {
 
   },
   methods: {
-
+    deleteTodo(id){
+      if(confirm('确定删除吗？')){
+        this.handleDelete(id);
+      }
+    }
   },
   created() { },
   mounted() { }
@@ -68,5 +72,13 @@ li:before {
 
 li:last-child {
   border-bottom: none;
+}
+
+li:hover{
+  background-color: #ddd;
+}
+
+li:hover button{
+  display: block;
 }
 </style>
