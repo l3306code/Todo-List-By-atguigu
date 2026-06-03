@@ -1,7 +1,8 @@
 <template>
   <li>
     <label>
-      <input type="checkbox" :checked="todoObj.done" />
+      <!-- 不太推荐的写法，因为修改的props，但vue2未检测到 -->
+      <input type="checkbox" v-model="todoObj.done" />
       <span>{{ todoObj.title }}</span>
     </label>
     <button class="btn btn-danger" style="display:none">删除</button>
