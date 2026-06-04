@@ -4,7 +4,7 @@
       <input type="checkbox" :checked="todoObj.done" @change="handleCheck(todoObj.id)"/>
       <span>{{ todoObj.title }}</span>
     </label>
-    <button class="btn btn-danger" style="display:none">删除</button>
+    <button class="btn btn-danger" @click="deleteTodo(todoObj.id)" >删除</button>
   </li>
 </template>
 
@@ -15,7 +15,7 @@ export default {
 
   },
   //父传子核心操作
-  props: ['todoObj', 'checkTodo'],
+  props: ['todoObj', 'checkTodo', 'handleDelete'],
   data() {
     return {
     };
@@ -30,6 +30,11 @@ export default {
     handleCheck(id){
         console.log(id);       
         this.checkTodo(id) 
+    },
+    deleteTodo(id){
+        if(confirm('确定删除吗？')){
+            this.handleDelete(id);
+        }
     }
   },
   created() { },
@@ -71,4 +76,13 @@ li:before {
 li:last-child {
   border-bottom: none;
 }
+
+li:hover{
+  background: #ddd;
+
+}
+
+li:hover button{
+  display: block;
+} 
 </style>

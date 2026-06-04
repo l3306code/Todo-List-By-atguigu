@@ -3,7 +3,11 @@
   <div class="todo-container">
     <div class="todo-wrap">
       <HeaderVue :recieve="recieve"/>
-      <List :todos="todos" />
+      <List 
+      :todos="todos"
+      :checkTodo="checkTodo"
+      :handle-delete="handleDelete"
+      />
       <Footer />
     </div>
   </div>
@@ -40,8 +44,11 @@ export default {
      checkTodo(id){
        this.todos.forEach(
         (todo) =>{
-           if
+           if(todo.id === id)  todo.done = !todo.done
         })
+     },
+     handleDelete(id){
+       this.todos = this.todos.filter((todo) => todo.id !== id)
      }
 
   }
