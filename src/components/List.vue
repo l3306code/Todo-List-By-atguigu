@@ -1,7 +1,8 @@
 <template>
   <ul class="todo-main">
-    <ItemVue v-for="todoObj in todos" :key="todoObj.id" :todoObj="todoObj"
-    :checkTodo="checkTodo"/>
+    <ItemVue v-for="todoObj in todos" :key="todoObj.id" 
+    :todoObj="todoObj"
+    :handleDelete="handleDelete"/>
   </ul>
 </template>
 
@@ -13,7 +14,7 @@ export default {
   components: {
     ItemVue
   },
-  props: ['todos', 'checkTodo'],
+  props: ['todos', 'handleDelete'],
   data() {
     return {
       
