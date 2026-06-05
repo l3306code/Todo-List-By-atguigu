@@ -8,7 +8,10 @@
       :checkTodo="checkTodo"
       :handle-delete="handleDelete"
       />
-      <Footer />
+      <Footer 
+        :todos="todos"
+        :checkAllTodo="checkAllTodo"
+      />
     </div>
   </div>
 </div>
@@ -47,8 +50,13 @@ export default {
            if(todo.id === id)  todo.done = !todo.done
         })
      },
+     //删除单个TODO
      handleDelete(id){
        this.todos = this.todos.filter((todo) => todo.id !== id)
+     },
+     //全选 全不选状态框
+     checkAllTodo(status){
+       this.todos.forEach((todo) => todo.done = status)
      }
 
   }
