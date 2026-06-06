@@ -6,17 +6,18 @@
     <span>
       <span>已完成{{ doneTotal }}</span> / 全部{{ total }} 
     </span>
-    <button class="btn btn-danger">清除已完成任务</button>
+    <button class="btn btn-danger" @click="deleteDoneTodos">清除已完成任务</button>
   </div>
 </template>
 
 <script>
+
 export default {
   name: "Footer",
   components: {
 
   },
-  props: ['todos', 'checkAllTodo'],
+  props: ['todos', 'checkAllTodo', 'handleDeleteDone'],
   data() {
     return {
     };
@@ -38,6 +39,11 @@ export default {
   methods: {
     checkAll(e){
       this.checkAllTodo(e.target.checked)
+    },
+    deleteDoneTodos(){
+      if(confirm('确定删除已完成任务吗？')){
+        this.handleDeleteDone();
+      }
     }
   },
   created() { },

@@ -11,6 +11,7 @@
       <Footer 
         :todos="todos"
         :checkAllTodo="checkAllTodo"
+        :handleDeleteDone="handleDeleteDone"
       />
     </div>
   </div>
@@ -57,9 +58,13 @@ export default {
      //全选 全不选状态框
      checkAllTodo(status){
        this.todos.forEach((todo) => todo.done = status)
+     },
+     //删除已完成任务
+     handleDeleteDone(){
+        this.todos = this.todos.filter((todo) => !todo.done)
      }
 
-  }
+    }  
 }
 </script>
 
