@@ -33,11 +33,7 @@ export default {
   },
   data() {
     return {
-      todos:[
-        {id: '0001', title:'吃饭', done: true},
-        {id: '0002', title:'抽烟', done: false},
-        {id: '0003', title:'喝酒', done: false}
-      ]
+      todos:JSON.parse(localStorage.getItem('todos')) || []
     };
   },
   methods: {
@@ -64,7 +60,20 @@ export default {
         this.todos = this.todos.filter((todo) => !todo.done)
      }
 
-    }  
+    },
+    watch: {
+       todos: {
+        handler(newVal){
+          localStorage.setItem('todos', JSON.stringify(newVal));
+        },
+        //需要开启深度监视才能看到localStorage todos数组内部对象的变化
+        deep: true
+       }
+    },
+    mounted() {
+      const todos = localStorage.getItem('todos');
+      if(todos) this.todos = JSON.parse(todos);
+    }
 }
 </script>
 
