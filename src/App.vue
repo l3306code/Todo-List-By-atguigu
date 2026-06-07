@@ -8,7 +8,11 @@
       :checkTodo="checkTodo"
       :handle-delete="handleDelete"
       />
-      <Footer />
+      <Footer 
+        :todos="todos"
+        :checkAllTodo="checkAllTodo"
+        :handleDeleteDone="handleDeleteDone"
+      />
     </div>
   </div>
 </div>
@@ -29,11 +33,7 @@ export default {
   },
   data() {
     return {
-      todos:[
-        {id: '0001', title:'吃饭', done: true},
-        {id: '0002', title:'抽烟', done: false},
-        {id: '0003', title:'喝酒', done: false}
-      ]
+      todos:JSON.parse(localStorage.getItem('todos')) || []
     };
   },
   methods: {
@@ -47,11 +47,33 @@ export default {
            if(todo.id === id)  todo.done = !todo.done
         })
      },
+     //删除单个TODO
      handleDelete(id){
        this.todos = this.todos.filter((todo) => todo.id !== id)
+     },
+     //全选 全不选状态框
+     checkAllTodo(status){
+       this.todos.forEach((todo) => todo.done = status)
+     },
+     //删除已完成任务
+     handleDeleteDone(){
+        this.todos = this.todos.filter((todo) => !todo.done)
      }
 
-  }
+    },
+    watch: {
+       todos: {
+        handler(newVal){
+          localStorage.setItem('todos', JSON.stringify(newVal));
+        },
+        //需要开启深度监视才能看到localStorage todos数组内部对象的变化
+        deep: true
+       }
+    },
+    mounted() {
+      const todos = localStorage.getItem('todos');
+      if(todos) this.todos = JSON.parse(todos);
+    }
 }
 </script>
 
