@@ -11,7 +11,7 @@ export default {
     components: {
 
     },
-    props: ['recieve'],
+    props: [],
     data() {
         return {
             todoItem: ''
@@ -33,7 +33,9 @@ export default {
                 title: this.todoItem,
                 done: false
             }
-            this.recieve(todoObj);
+
+            this.$emit('sendTodo', todoObj)
+
             this.todoItem = '';
         }
     },

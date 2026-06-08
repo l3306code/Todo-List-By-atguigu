@@ -17,7 +17,7 @@ export default {
   components: {
 
   },
-  props: ['todos', 'checkAllTodo', 'handleDeleteDone'],
+  props: ['todos',  'handleDeleteDone'],
   data() {
     return {
     };
@@ -38,13 +38,13 @@ export default {
   },
   methods: {
     checkAll(e){
-      this.checkAllTodo(e.target.checked)
+      this.$emit('checkAllTODO', e.target.checked)
     },
     deleteDoneTodos(){
       if(confirm('确定删除已完成任务吗？')){
         this.handleDeleteDone();
       }
-    }
+    },
   },
   created() { },
   mounted() { }

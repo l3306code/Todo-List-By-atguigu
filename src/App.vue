@@ -2,15 +2,16 @@
   <div id="root">
   <div class="todo-container">
     <div class="todo-wrap">
-      <HeaderVue :recieve="recieve"/>
+      <HeaderVue ref="jlHeader"/>
       <List 
+      ref="myList"
       :todos="todos"
       :checkTodo="checkTodo"
       :handle-delete="handleDelete"
       />
       <Footer 
+        ref="myFooter"
         :todos="todos"
-        :checkAllTodo="checkAllTodo"
         :handleDeleteDone="handleDeleteDone"
       />
     </div>
@@ -37,9 +38,6 @@ export default {
     };
   },
   methods: {
-     recieve(data){
-        this.todos.unshift(data);
-     },
      //取消勾选或勾选todo
      checkTodo(id){
        this.todos.forEach(
@@ -52,9 +50,9 @@ export default {
        this.todos = this.todos.filter((todo) => todo.id !== id)
      },
      //全选 全不选状态框
-     checkAllTodo(status){
+   /*   checkAllTodo(status){
        this.todos.forEach((todo) => todo.done = status)
-     },
+     }, */
      //删除已完成任务
      handleDeleteDone(){
         this.todos = this.todos.filter((todo) => !todo.done)
@@ -73,6 +71,16 @@ export default {
     mounted() {
       const todos = localStorage.getItem('todos');
       if(todos) this.todos = JSON.parse(todos);
+
+      this.$refs.myFooter.$on('checkAllTODO', (status) =>{
+         this.todos.forEach((todo) => todo.done = status)
+      })
+
+
+      //添加待办事项
+      this.$refs.jlHeader.$on('sendTodo', (todoObj) =>{
+        this.todos.unshift(todoObj);
+      })
     }
 }
 </script>
