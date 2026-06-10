@@ -17,7 +17,7 @@ export default {
   components: {
 
   },
-  props: ['todos',  'handleDeleteDone'],
+  props: ['todos'],
   data() {
     return {
     };
@@ -42,7 +42,7 @@ export default {
     },
     deleteDoneTodos(){
       if(confirm('确定删除已完成任务吗？')){
-        this.handleDeleteDone();
+        this.$emit('handleDeleteDone')
       }
     },
   },
