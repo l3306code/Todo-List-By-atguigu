@@ -12,7 +12,7 @@
       <Footer 
         ref="myFooter"
         :todos="todos"
-        :handleDeleteDone="handleDeleteDone"
+        @handleDeleteDone="handleDeleteDone"
       />
     </div>
   </div>
