@@ -17,7 +17,7 @@ export default {
   components: {
 
   },
-  props: ['todos',],
+  props: ['todos'],
   data() {
     return {
     };
