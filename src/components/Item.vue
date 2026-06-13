@@ -15,7 +15,7 @@ export default {
 
   },
   //父传子核心操作
-  props: ['todoObj', 'checkTodo', 'handleDelete'],
+  props: ['todoObj'],
   data() {
     return {
     };
@@ -29,11 +29,13 @@ export default {
   methods: {
     handleCheck(id){
         console.log(id);       
-        this.checkTodo(id) 
+      
+        this.$bus.$emit('checkTodo', id)
     },
     deleteTodo(id){
         if(confirm('确定删除吗？')){
-            this.handleDelete(id);
+
+          this.$bus.$emit('handleDelete', id)
         }
     }
   },

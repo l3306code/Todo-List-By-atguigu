@@ -6,8 +6,6 @@
       <List 
       ref="myList"
       :todos="todos"
-      :checkTodo="checkTodo"
-      :handle-delete="handleDelete"
       />
       <Footer 
         ref="myFooter"
@@ -38,17 +36,6 @@ export default {
     };
   },
   methods: {
-     //取消勾选或勾选todo
-     checkTodo(id){
-       this.todos.forEach(
-        (todo) =>{
-           if(todo.id === id)  todo.done = !todo.done
-        })
-     },
-     //删除单个TODO
-     handleDelete(id){
-       this.todos = this.todos.filter((todo) => todo.id !== id)
-     },
      //全选 全不选状态框
    /*   checkAllTodo(status){
        this.todos.forEach((todo) => todo.done = status)
@@ -81,6 +68,25 @@ export default {
       this.$refs.jlHeader.$on('sendTodo', (todoObj) =>{
         this.todos.unshift(todoObj);
       })
+
+      //全局事件总线，接收组件数据
+
+      //取消勾选或勾选todo
+      this.$bus.$on('checkTodo', (id) =>{
+          this.todos.forEach(
+        (todo) =>{
+           if(todo.id === id)  todo.done = !todo.done
+        })
+      })
+   
+      // 删除单个todo
+      this.$bus.$on('handleDelete', (id) => {
+         this.todos = this.todos.filter((todo) => todo.id !== id)
+      })
+    },
+    beforeDestroy(){
+      this.$bus.$off('checkTodo')
+      this.$bus.$off('handleDelete')
     }
 }
 </script>
