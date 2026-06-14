@@ -21,6 +21,7 @@
 import HeaderVue from './components/Header.vue';
 import Footer from './components/Footer.vue';
 import List from './components/List.vue';
+import PubSub  from 'pubsub-js';
 
 
 export default {
@@ -72,21 +73,41 @@ export default {
       //全局事件总线，接收组件数据
 
       //取消勾选或勾选todo
-      this.$bus.$on('checkTodo', (id) =>{
+
+      //版本一: 全局事件总线 
+      /* this.$bus.$on('checkTodo', (id) =>{
           this.todos.forEach(
+        (todo) =>{
+           if(todo.id === id)  todo.done = !todo.done
+        })
+      }) */
+
+      //版本二: 使用pubsub
+      PubSub.subscribe('checkTodo', (_,id) =>{
+         this.todos.forEach(
         (todo) =>{
            if(todo.id === id)  todo.done = !todo.done
         })
       })
    
       // 删除单个todo
-      this.$bus.$on('handleDelete', (id) => {
+
+      //版本一: 全局事件总线
+      /* this.$bus.$on('handleDelete', (id) => {
          this.todos = this.todos.filter((todo) => todo.id !== id)
       })
+      */
+
+      //版本2: 使用pubsub
+      this.hdPubId = PubSub.subscribe('handleDelete', (_, id) =>{
+        console.log('我收到了id', id);
+        this.todos = this.todos.filter((todo) => todo.id !== id)
+      })
+       
     },
     beforeDestroy(){
-      this.$bus.$off('checkTodo')
-      this.$bus.$off('handleDelete')
+      /* this.$bus.$off('checkTodo')
+      this.$bus.$off('handleDelete') */
     }
 }
 </script>
