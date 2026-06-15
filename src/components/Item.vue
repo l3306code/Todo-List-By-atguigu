@@ -11,7 +11,7 @@
 <script>
 import PubSub from 'pubsub-js';
 export default {
-  name: "Itemvue",
+  name: "ItemVue",
   components: {
 
   },
@@ -31,12 +31,17 @@ export default {
     handleCheck(id){
         console.log(id);       
       
-        this.$bus.$emit('checkTodo', id)
+        // this.$bus.$emit('checkTodo', id)
+        PubSub.publish('checkTodo', id)
     },
     deleteTodo(id){
         if(confirm('确定删除吗？')){
 
-          this.$bus.$emit('handleDelete', id)
+          // this.$bus.$emit('handleDelete', id)
+          console.log("删除执行", id);
+          PubSub.publish('handleDelete', id)
+          
+          
         }
     }
   },
