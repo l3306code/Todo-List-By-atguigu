@@ -103,11 +103,23 @@ export default {
         console.log('我收到了id', id);
         this.todos = this.todos.filter((todo) => todo.id !== id)
       })
+
+
+      this.$bus.$on('updateTodo', (id, newTodoTitle) =>{
+        
+        this.todos.forEach(
+          (todo) =>{
+            if(todo.id === id) todo.title = newTodoTitle
+          }
+        )
+      })
        
     },
     beforeDestroy(){
       /* this.$bus.$off('checkTodo')
       this.$bus.$off('handleDelete') */
+
+      this.$bus.$off('updateTodo')
     }
 }
 </script>
@@ -135,6 +147,13 @@ body {
   color: #fff;
   background-color: #da4f49;
   border: 1px solid #bd362f;
+}
+
+
+.btn-edit {
+  color: #fff;
+  background-color: skyblue;
+  border: 1px solid rgb(74, 108, 121);
 }
 
 .btn-danger:hover {
