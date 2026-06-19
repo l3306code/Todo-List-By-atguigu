@@ -103,14 +103,24 @@ export default {
         console.log('我收到了id', id);
         this.todos = this.todos.filter((todo) => todo.id !== id)
       })
-      
+
+
+      this.$bus.$on('updateTodo', (id, newTodoTitle) =>{
+        
+        this.todos.forEach(
+          (todo) =>{
+            if(todo.id === id) todo.title = newTodoTitle
+          }
+        )
+      })
+       
     },
     beforeDestroy(){
       /* this.$bus.$off('checkTodo')
       this.$bus.$off('handleDelete') */
-      PubSub.unsubscribe(this.hdPubId)
-      PubSub.unsubscribe(this.ctPubId)
-    } 
+
+      this.$bus.$off('updateTodo')
+    }
 }
 </script>
 
