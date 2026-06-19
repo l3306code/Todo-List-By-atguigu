@@ -21,7 +21,7 @@
 import HeaderVue from './components/Header.vue';
 import Footer from './components/Footer.vue';
 import List from './components/List.vue';
-import PubSub  from 'pubsub-js';
+import PubSub, { publish }  from 'pubsub-js';
 
 
 export default {
@@ -83,7 +83,7 @@ export default {
       }) */
 
       //版本二: 使用pubsub
-      PubSub.subscribe('checkTodo', (_,id) =>{
+      this.ctPubId = PubSub.subscribe('checkTodo', (_,id) =>{
          this.todos.forEach(
         (todo) =>{
            if(todo.id === id)  todo.done = !todo.done
@@ -103,12 +103,14 @@ export default {
         console.log('我收到了id', id);
         this.todos = this.todos.filter((todo) => todo.id !== id)
       })
-       
+      
     },
     beforeDestroy(){
       /* this.$bus.$off('checkTodo')
       this.$bus.$off('handleDelete') */
-    }
+      PubSub.unsubscribe(this.hdPubId)
+      PubSub.unsubscribe(this.ctPubId)
+    } 
 }
 </script>
 
@@ -135,6 +137,12 @@ body {
   color: #fff;
   background-color: #da4f49;
   border: 1px solid #bd362f;
+}
+
+.btn-edit {
+  color: #fff;
+  background-color: skyblue;
+  border: 1px solid rgb(113, 166, 187);
 }
 
 .btn-danger:hover {
