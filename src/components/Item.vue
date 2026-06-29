@@ -7,8 +7,10 @@
         <input v-show="todoObj.isEdit" type="text" :value="todoObj.title" @blur="handleBlur(todoObj, $event)"
           ref="inputTitle">
       </label>
-      <button class="btn btn-danger" @click="deleteTodo(todoObj.id)">删除</button>
-      <button class="btn btn-edit" @click="handleEdit(todoObj)">编辑</button>
+      <div class="btns">
+        <button class="btn btn-edit" @click="handleEdit(todoObj)">编辑</button>
+        <button class="btn btn-danger" @click="deleteTodo(todoObj.id)">删除</button>
+      </div>
     </li>
   </transition>
 </template>
@@ -79,9 +81,19 @@ export default {
 li {
   list-style: none;
   height: 36px;
-  line-height: 36px;
   padding: 0 5px;
   border-bottom: 1px solid #ddd;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+
+.btns {
+  display: flex;
+  gap: 8px;
+  align-items: center;
 }
 
 li label {
@@ -96,10 +108,9 @@ li label li input {
   top: -1px;
 }
 
-li button {
-  float: right;
-  display: none;
-  margin-top: 3px;
+.btns button {
+  opacity: 0;
+  transition: 0.2s;
 }
 
 li:before {
@@ -112,11 +123,10 @@ li:last-child {
 
 li:hover {
   background: #ddd;
-
 }
 
-li:hover button {
-  display: block;
+li:hover .btns button {
+  opacity: 1;
 }
 
 
